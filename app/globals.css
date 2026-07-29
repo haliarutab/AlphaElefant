@@ -1,0 +1,265 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Font stack — Outfit for display + body, Space Mono for mono labels */
+  --font-sans: var(--font-outfit), 'Outfit Fallback', system-ui, sans-serif;
+  --font-heading: var(--font-outfit), 'Outfit Fallback', sans-serif;
+  --font-mono: var(--font-mono), 'Space Mono Fallback', monospace;
+
+  /* Design tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  /* Brand palette */
+  --color-navy: var(--navy);
+  --color-orange: #E8500A;
+  --color-cream: var(--cream);
+  --color-navy-mid: var(--navy-mid);
+  --color-ink: var(--background);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+}
+
+:root,
+html.light {
+  color-scheme: light;
+  --background: #FAF6EE;
+  /* Warm premium cream */
+  --foreground: #020813;
+  /* Deep midnight navy */
+  --card: #EDE5D8;
+  /* Slightly darker cream for cards */
+  --card-foreground: #020813;
+  --popover: #EDE5D8;
+  --popover-foreground: #020813;
+  --primary: #E8500A;
+  --primary-foreground: #ffffff;
+  --secondary: #DFD7C9;
+  --secondary-foreground: #020813;
+  --muted: #E2DACF;
+  --muted-foreground: #4E5E72;
+  --accent: #E8500A;
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(2, 8, 19, 0.08);
+  --input: rgba(2, 8, 19, 0.05);
+  --ring: #E8500A;
+  --radius: 0.5rem;
+
+  --navy: #1E3144;
+  --navy-mid: #2B435C;
+  --cream: #FAF6EE;
+}
+
+html.dark {
+  color-scheme: dark;
+  --background: #020813;
+  /* Increased darker blue shade (midnight navy) */
+  --foreground: #FAF6EE;
+  /* Warm cream */
+  --card: #061020;
+  /* Deep card bg */
+  --card-foreground: #FAF6EE;
+  --popover: #061020;
+  --popover-foreground: #FAF6EE;
+  --primary: #E8500A;
+  --primary-foreground: #ffffff;
+  --secondary: #0B1B2D;
+  --secondary-foreground: #FAF6EE;
+  --muted: #0B1B2D;
+  --muted-foreground: #8096AC;
+  --accent: #E8500A;
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.07);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: #E8500A;
+  --radius: 0.5rem;
+
+  --navy: #0B1B2D;
+  --navy-mid: #0F243A;
+  --cream: #FAF6EE;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    cursor: none;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-outfit), sans-serif;
+  }
+}
+
+/* ─── Custom cursor ─────────────────────────────────────── */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #E8500A;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.15s, height 0.15s;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(232, 80, 10, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s, background 0.25s;
+}
+
+.cursor-ring.hover {
+  width: 52px;
+  height: 52px;
+  border-color: #E8500A;
+  background: rgba(232, 80, 10, 0.08);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8500A;
+  border-radius: 2px;
+}
+
+/* ─── Utility glows ─────────────────────────────────────── */
+.glow-orange {
+  box-shadow: 0 0 50px rgba(232, 80, 10, 0.2), 0 0 100px rgba(232, 80, 10, 0.08);
+}
+
+.text-glow {
+  text-shadow: 0 0 40px rgba(232, 80, 10, 0.55), 0 0 80px rgba(232, 80, 10, 0.25);
+}
+
+.border-glow {
+  border: 1px solid rgba(232, 80, 10, 0.35);
+  box-shadow: 0 0 24px rgba(232, 80, 10, 0.08), inset 0 0 24px rgba(232, 80, 10, 0.04);
+}
+
+/* ─── Grid lines ─────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(232, 80, 10, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 80, 10, 0.035) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ─── Hero diagonal clip ─────────────────────────────────── */
+.hero-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 80, 10, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 14px rgba(232, 80, 10, 0);
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2.5s infinite;
+}
+
+@keyframes float-y {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+/* ─── Marquee ─────────────────────────────────────────────── */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* ─── Reveal lines (used by framer variants) ─────────────── */
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* ─── Horizontal rule accent ─────────────────────────────── */
+.hr-accent {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 80, 10, 0.5) 30%, rgba(232, 80, 10, 0.5) 70%, transparent);
+}
